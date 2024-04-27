@@ -1,43 +1,40 @@
-import Login from "./components/auth/login";
-import Register from "./components/auth/register";
 import Header from "./components/header";
-import Home from "./components/home";
-import { useRoutes } from "react-router-dom";
+import Home from "./pages/home/home";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/authContext";
-import { BrowserRouter as Router } from "react-router-dom";
-import "./App.css";
+import "./App.module.css";
+import { Layout } from "./pages/layout";
+import { AIContextProvider } from "./contexts/ai-context";
+import { ChatPage } from "./pages/chat/chat";
+import Login from "./pages/auth/login/login";
+import Register from "./pages/auth/register/register";
 
-function Routes() {
-  const routesArray = [
-    {
-      path: "*",
-      element: <Login />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/register",
-      element: <Register />,
-    },
-    {
-      path: "/home",
-      element: <Home />,
-    },
-  ];
-  const routesElement = useRoutes(routesArray);
-  return <div className="w-full h-screen flex flex-col">{routesElement}</div>;
-}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "/chat/:chatId", element: <ChatPage /> }
+    ]
+  },
+  {
+    path: "/auth",
+    element: <Header />,
+    children: [
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> }
+    ]
+  }
+]);
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <Header />
-        <Routes />
-      </AuthProvider>
-    </Router>
+    <AuthProvider>
+      <AIContextProvider>
+        <RouterProvider router={router} />
+      </AIContextProvider>
+    </AuthProvider>
   );
 }
 

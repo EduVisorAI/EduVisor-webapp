@@ -1,0 +1,11 @@
+.input {
+  @apply rounded-full shadow-2xl m-0 w-full resize-none border-0 bg-transparent focus:ring-0 focus-visible:ring-0  py-[10px] pr-10 md:py-3.5 md:pr-12 max-h-[25dvh] max-h-52  pl-4 md:pl-6;
+}
+
+.disabled-input {
+  @apply m-0 w-full resize-none border-0 bg-transparent focus:ring-0 focus-visible:ring-0  py-[10px] pr-10 md:py-3.5 md:pr-12 max-h-[25dvh] max-h-52  pl-4 md:pl-6;
+}
+
+.container {
+  @apply relative w-full mx-auto z-20 flex items-center justify-center bottom-0 right-[2px] lg:right-auto lg:w-[56rem] max-w-4xl p-2;
+}

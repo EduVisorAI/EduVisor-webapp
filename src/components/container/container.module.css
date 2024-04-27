@@ -1,0 +1,7 @@
+.background {
+  @apply relative z-0 flex h-full w-full overflow-hidden bg-[#F3F7FB];
+}
+
+.container {
+  @apply relative flex h-full max-w-full flex-1 flex-col overflow-hidden;
+}

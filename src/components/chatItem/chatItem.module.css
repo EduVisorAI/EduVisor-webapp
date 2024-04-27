@@ -1,0 +1,11 @@
+.card {
+  @apply transition-all ease-in-out duration-300 p-2 my-4 rounded-md;
+}
+
+.title {
+  @apply font-bold tracking-wide;
+}
+
+.description {
+  @apply text-xs mt-1;
+}
