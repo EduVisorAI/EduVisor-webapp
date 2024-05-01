@@ -15,7 +15,7 @@
 }
 
 .chat-container {
-  @apply pb-40;
+  @apply flex-1 overflow-y-auto py-5 px-5;
 }
 
 .error-container {

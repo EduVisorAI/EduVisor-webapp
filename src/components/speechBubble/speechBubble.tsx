@@ -48,7 +48,7 @@ export const SpeechBubble: React.FC<{
                 className="object-contain"
               />
             </div>
-            <div>{content}</div>
+            <div className="text-justify">{content}</div>
           </div>
         )}
       </motion.div>
@@ -70,7 +70,7 @@ export const SpeechBubble: React.FC<{
                 className="object-contain"
               />
             </div>
-            <div>{content}</div>
+            <div className="text-justify">{content}</div>
           </div>
         )}
       </div>

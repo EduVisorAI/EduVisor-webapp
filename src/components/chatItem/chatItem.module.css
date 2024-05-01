@@ -1,5 +1,9 @@
 .card {
-  @apply transition-all ease-in-out duration-300 p-2 my-4 rounded-md;
+  @apply transition-all ease-in-out duration-300 px-2 py-4  my-4;
+}
+
+.active {
+  @apply bg-[#f5f6ff] text-[#5661F6] rounded-full;
 }
 
 .title {

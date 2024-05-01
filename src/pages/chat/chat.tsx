@@ -81,7 +81,7 @@ export const ChatPage = () => {
   };
 
   return (
-    <div className="flex h-full flex-col pb-2">
+    <>
       {conversation && conversation.speeches.length === 0 && (
         <div className={styles["secondary-section"]}>
           <h2 className={styles["secondary-heading"]}>Prueba con esto</h2>
@@ -102,7 +102,7 @@ export const ChatPage = () => {
         </div>
       )}
       {conversation && conversation.speeches.length > 0 && (
-        <div className="flex-1 overflow-hidden mx-auto max-w-[800px] pt-5 px-5">
+        <div className={styles["chat-container"]}>
           {conversation.speeches.map((speech, id) => {
             const speaker = speech.speaker === "HUMAN" ? "user" : "ai";
             let animate = false;
@@ -140,6 +140,6 @@ export const ChatPage = () => {
         inputSubmitHandler={onInputSubmit}
         submitting={loading}
       />
-    </div>
+    </>
   );
 };

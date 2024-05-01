@@ -1,24 +1,18 @@
-// import { Chat } from "../menuItems/chat.tsx";
-// import styles from "./navigation.module.css";
-// import { Settings } from "../menuItems/settings.tsx";
-// import Logo from "../../assets/logo.png";
-// import { NavLink } from "react-router-dom";
-// import { useState } from "react";
-// import { AIContext } from "../../context/ai-context";
-// import { motion } from "framer-motion";
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useEffect, useState } from "react";
 import { ChatItem } from "../chatItem/chatItem";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AIContext } from "../../contexts/ai-context";
 import styles from "../button/button.module.css";
+import Drawer from "../drawer/drawer";
 
 export const Navigation = () => {
   const [chatTitle, setChatTitle] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { chatId } = useParams() as any;
-  const { conversations } = useContext(AIContext);
+  const { newConvo, conversations } = useContext(AIContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (chatId && conversations[chatId]) {
@@ -28,11 +22,11 @@ export const Navigation = () => {
     }
   }, [chatId, conversations]);
 
-  // const settingsDrawerHandler = () => {
-  //   if (settingsOpen) {
-  //     setSettingsOpen(false);
-  //   }
-  // };
+  const newChatHandler = () => {
+    const id = conversations.length;
+    newConvo();
+    navigate(`/chat/${id}`);
+  };
 
   const SettingsButton = () => {
     return (
@@ -74,51 +68,78 @@ export const Navigation = () => {
     );
   };
 
-  return (
-    <div className="w-[348px] flex flex-col overflow-x-hidden shrink-0 bg-white h-full">
-      <div className="h-full w-[348px]">
-        <nav className="flex h-full w-full flex-col pb-3.5">
-          <div className="sticky left-0 right-0 top-0 z-20 pt-3.5 ">
-            <div className="mb-5 px-5">
-              <img src={"/logo.png"} />
-            </div>
-            <div className="flex justify-center items-center gap-2 mb-5 px-5">
-              <button
-                className={`${styles["btn"]} bg-[#5661F6] hover:bg-[#4C53D7] flex gap-2 justify-center items-center rounded-full text-white h-12 flex-1`}
-              >
-                <img src="/add.png" />
-                <p className="font-medium">Nuevo chat</p>
-              </button>
-              <button className="rounded-full bg-black w-12 h-12 flex justify-center items-center">
-                <img src={"/search.png"} />
-              </button>
-            </div>
-            <div className="px-5 my-0 flex justify-between border-t border-b border-gray-200/50 py-4">
-              <p className="text-[#6A6969] font-bold text-[14px]">
-                Tus conversaciones
-              </p>
-              <p className="text-[#5661F6] font-bold text-[14px]">
-                Limpiar todo
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col flex-1 overflow-y-auto h-full">
-            <div className="px-5">
-              {conversations.map((convo, index) => (
-                <Link key={index} to={`/chat/${index}`}>
-                  <ChatItem convo={convo} />
-                </Link>
-              ))}
-            </div>
-          </div>
-          <div className=" px-5 pb-5">
-            <div className="flex flex-col gap-3">
-              <SettingsButton />
-              <ProfileButton />
-            </div>
-          </div>
-        </nav>
+  const TopMenu = () => {
+    const [openLeft, setOpenLeft] = useState(false);
+
+    return (
+      <div className="flex justify-between items-center px-5 py-3.5 border-b border-gray-200">
+        <div onClick={() => setOpenLeft(!openLeft)}>
+          <img src="/menu.png" className="cursor-pointer" />
+          <Drawer open={openLeft} side="left" setOpen={setOpenLeft} />
+        </div>
+        <div></div>
       </div>
-    </div>
+    );
+  };
+
+  return (
+    <>
+      <div className="hidden md:block">
+        <div className="w-[348px] flex flex-col overflow-x-hidden shrink-0 bg-white h-full">
+          <div className="h-full w-[348px]">
+            <div className="flex-1 w-full h-full relative">
+              <nav className="flex h-full min-h-0 flex-col pb-3.5">
+                <div className="sticky left-0 right-0 top-0 z-20 pt-3.5 ">
+                  <div className="mb-5 px-5">
+                    <img src={"/logo.png"} />
+                  </div>
+                  <div className="flex justify-center items-center gap-2 mb-5 px-5">
+                    <button
+                      onClick={newChatHandler}
+                      className={`${styles["btn"]} bg-[#5661F6] hover:bg-[#4C53D7] flex gap-2 justify-center items-center rounded-full text-white h-12 flex-1`}
+                    >
+                      <img src="/add.png" />
+                      <p className="font-medium">Nuevo chat</p>
+                    </button>
+                    <button className="rounded-full bg-black w-12 h-12 flex justify-center items-center">
+                      <img src={"/search.png"} />
+                    </button>
+                  </div>
+                  <div className="px-5 my-0 flex justify-between border-t border-b border-gray-200/50 py-4">
+                    <p className="text-[#6A6969] font-bold text-[14px]">
+                      Tus conversaciones
+                    </p>
+                    <p className="text-[#5661F6] font-bold text-[14px]">
+                      Limpiar todo
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-col flex-1 overflow-y-auto h-full">
+                  <div className="px-5">
+                    {conversations.map((convo, index) => (
+                      <Link key={index} to={`/chat/${index}`}>
+                        <ChatItem
+                          convo={convo}
+                          isActive={chatId === index.toString()}
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+                <div className=" px-5 pb-5">
+                  <div className="flex flex-col gap-3">
+                    <SettingsButton />
+                    <ProfileButton />
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="md:hidden block">
+        <TopMenu />
+      </div>
+    </>
   );
 };
