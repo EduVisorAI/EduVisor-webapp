@@ -66,6 +66,28 @@ export class AI extends Speaker {
     temperature: number
   ) {
     const renderer = new Renderer();
+    try {
+      const response = await fetch(
+        "https://eduvisor-backend.azurewebsites.net/api/chemical",
+        {
+          mode: "cors",
+          method: "POST", // or 'PUT'
+          headers: {
+            "Access-Control-Allow-Origin": "*"
+          },
+          body: JSON.stringify({
+            chemicalRequest: prompt.content
+          })
+        }
+      );
+
+      //  {"response": "string", "cid": "number"}
+      const json = await response.json();
+      return this.speak(json.response);
+    } catch (error) {
+      throw new Error("There was an error. Please try again.");
+    }
+
     // const configuration = new Configuration({
     //   apiKey: import.meta.env.VITE_OPENAI_API_KEY
     // });
