@@ -1,7 +1,7 @@
 .background {
-  @apply bg-[#F3F7FB] z-0 w-full min-h-screen h-fit flex flex-col md:flex-row;
+  @apply bg-[#F3F7FB] z-0 w-full h-full min-h-screen flex flex-col md:flex-row;
 }
 
 .container {
-  @apply md:w-[56rem] w-full max-w-4xl mx-auto flex flex-col grow px-4 md:px-0;
+  @apply md:w-[56rem] w-full h-full max-w-4xl mx-auto flex flex-col grow px-4 md:px-0;
 }
