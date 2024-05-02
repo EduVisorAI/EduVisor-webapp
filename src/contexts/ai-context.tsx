@@ -17,9 +17,9 @@ export const AIContext = React.createContext<{
   token: 2048,
   prompt: "",
   newConvo: () => {},
-  sendPrompt: (id: number, prompt: string) =>
-    new Promise((resolve, reject) => {}),
-  configure: (temp: number, token: number, prompt: string) => {}
+  sendPrompt: (_id: number, _prompt: string) =>
+    new Promise((_resolve, _reject) => {}),
+  configure: (_temp: number, _token: number, _prompt: string) => {}
 });
 
 export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {

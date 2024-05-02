@@ -15,6 +15,9 @@ export const Navigation = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    chatTitle;
+    chatOpen;
+    setChatOpen;
     if (chatId && conversations[chatId]) {
       setChatTitle(conversations[chatId].title);
     } else {
