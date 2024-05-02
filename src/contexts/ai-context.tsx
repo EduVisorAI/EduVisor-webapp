@@ -54,7 +54,12 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
     const chatGptApi = new Controller();
     setConversations((prevConvos) => {
       const newConvos = [...prevConvos];
-      newConvos[id].speeches.push({ speaker: "HUMAN", content: prompt });
+      newConvos[id].speeches.push({
+        speaker: "HUMAN",
+        content: {
+          response: prompt
+        }
+      });
       return newConvos;
     });
     await chatGptApi.prompt(id, prompt);

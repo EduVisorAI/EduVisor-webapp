@@ -30,6 +30,7 @@ export const ChatPage = () => {
   useEffect(() => {
     if (conversations[chatId]) {
       setConversation(conversations[chatId]);
+      console.log("conversation.speeches", conversations[chatId].speeches);
     } else {
       navigate("/");
     }
@@ -114,7 +115,8 @@ export const ChatPage = () => {
                 <SpeechBubble
                   key={id}
                   speaker={speaker}
-                  text={speech.content}
+                  text={speech.content.response}
+                  cid={speech.content.cid}
                   animate={animate}
                 />
                 {speaker === "ai" && <ExtraFeatures />}

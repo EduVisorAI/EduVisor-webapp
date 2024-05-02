@@ -7,5 +7,5 @@
 }
 
 .container {
-  @apply relative w-full mx-auto z-10 flex items-center justify-center bottom-0 right-[2px] lg:right-auto lg:w-[56rem] max-w-4xl p-2;
+  @apply relative w-full mx-auto z-10 flex items-center justify-center bottom-0 right-[2px] lg:right-auto max-w-4xl p-2;
 }

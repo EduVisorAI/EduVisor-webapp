@@ -23,7 +23,7 @@ export class Controller {
     const curConvo = convos[convoId];
     const human = new Human();
     const ai = this.readAI();
-    const speech = human.speak(prompt);
+    const speech = human.speak({ response: prompt });
     human.add(speech, curConvo);
     ai.prompt = new Prompt(prompt);
     const response = await ai.think(curConvo);

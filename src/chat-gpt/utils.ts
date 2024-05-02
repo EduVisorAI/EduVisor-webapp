@@ -2,7 +2,10 @@ import { Speaker } from "./models/speaker";
 
 export interface Speech {
   speaker: Speaker;
-  content: string;
+  content: {
+    response: string;
+    cid?: string;
+  };
 }
 
 export interface Summary {

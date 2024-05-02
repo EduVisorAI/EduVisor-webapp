@@ -31,6 +31,7 @@ export class AI extends Speaker {
       this.token.length,
       this.temperature.value
     );
+
     return response;
   }
 
@@ -54,8 +55,8 @@ export class AI extends Speaker {
       0
     );
     conversation.summarize({
-      title: title.content,
-      description: description.content
+      title: title.content.response,
+      description: description.content.response
     });
   }
 
@@ -75,7 +76,7 @@ export class AI extends Speaker {
       });
 
       //  {"response": "string", "cid": "number"}
-      const response = await fetch(
+      const res = await fetch(
         "https://eduvisor-backend.azurewebsites.net/api/chemical",
         {
           method: "POST",
@@ -85,8 +86,9 @@ export class AI extends Speaker {
         }
       );
 
-      const json = await response.json();
-      return this.speak(json.response);
+      const json = await res.json();
+      // const { response, cid } = json;
+      return this.speak(json);
     } catch (error) {
       throw new Error("There was an error. Please try again.");
     }
@@ -115,8 +117,8 @@ export class AI extends Speaker {
     conversation; // remove
     tokens; // remove
     temperature; // remove
-    return this.speak(
-      "El etanol, también conocido como alcohol etílico, es un compuesto químico que se usa comúnmente como combustible, en bebidas alcohólicas y en aplicaciones industriales y médicas. Aquí te explico algunos de los aspectos más importantes del etanol:"
-    );
+    // return this.speak(
+    //   "El etanol, también conocido como alcohol etílico, es un compuesto químico que se usa comúnmente como combustible, en bebidas alcohólicas y en aplicaciones industriales y médicas. Aquí te explico algunos de los aspectos más importantes del etanol:"
+    // );
   }
 }

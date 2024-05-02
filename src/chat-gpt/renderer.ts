@@ -8,7 +8,7 @@ import { Speech } from "./utils";
 
 export type RenderedSpeech = {
   speaker: string;
-  content: string;
+  content: { response: string; cid?: string };
 };
 
 export type RenderedConversation = {
@@ -29,6 +29,7 @@ export class Renderer {
 
   conversation(convo: Conversation) {
     const renderedConvosArr: RenderedSpeech[] = [];
+
     for (let i = 0; i < convo.speeches.length; i++) {
       const speech = this.speech(convo.speeches[i]);
       renderedConvosArr.push(speech);
@@ -43,7 +44,10 @@ export class Renderer {
   speech(speech: Speech) {
     return {
       speaker: this.speaker(speech.speaker).race.valueOf(),
-      content: speech.content
+      content: {
+        response: speech.content.response,
+        cid: speech.content.cid
+      }
     };
   }
 

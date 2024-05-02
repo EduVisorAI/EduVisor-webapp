@@ -17,7 +17,13 @@ export class Parser {
       } else {
         speaker = new Speaker(Race.AI);
       }
-      speeches.push({ speaker: speaker, content: convo.speeches[i].content });
+      speeches.push({
+        speaker: speaker,
+        content: {
+          response: convo.speeches[i].content.response,
+          cid: convo.speeches[i].content.cid
+        }
+      });
     }
     return new Conversation(speeches, convo.title, convo.description);
   }
