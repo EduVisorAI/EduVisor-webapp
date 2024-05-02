@@ -67,21 +67,24 @@ export class AI extends Speaker {
   ) {
     const renderer = new Renderer();
     try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        chemicalRequest: prompt.content
+      });
+
+      //  {"response": "string", "cid": "number"}
       const response = await fetch(
         "https://eduvisor-backend.azurewebsites.net/api/chemical",
         {
-          mode: "cors",
-          method: "POST", // or 'PUT'
-          headers: {
-            "Access-Control-Allow-Origin": "*"
-          },
-          body: JSON.stringify({
-            chemicalRequest: prompt.content
-          })
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow"
         }
       );
 
-      //  {"response": "string", "cid": "number"}
       const json = await response.json();
       return this.speak(json.response);
     } catch (error) {

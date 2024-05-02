@@ -51,7 +51,6 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
   };
 
   const sendPrompt = async (id: number, prompt: string) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Wait for 2 seconds
     const chatGptApi = new Controller();
     setConversations((prevConvos) => {
       const newConvos = [...prevConvos];
