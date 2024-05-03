@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import styles from "./speechBubble.module.css";
 import Loader from "/loading.gif";
 import { motion } from "framer-motion";
+import { Button } from "../button/button";
+import { MdiShowOutline } from "../../assets/show-outline";
+import { SolarRefreshCircleLinear } from "../../assets/refresh-circle";
 
 export const SpeechBubble: React.FC<{
   speaker: string;
@@ -26,7 +30,7 @@ export const SpeechBubble: React.FC<{
     const content = props.loading ? (
       <img src={Loader} width={40} alt="Loading" />
     ) : (
-      <p>{props.text}</p>
+      <p className="font-bold">{props.text}</p>
     );
 
     return (
@@ -42,14 +46,28 @@ export const SpeechBubble: React.FC<{
       <img src={Loader} width={40} alt="Loading" />
     ) : (
       <>
-        <p>{props.text}</p>
+        <p className="font-bold text-[18px] mb-2">{props.text}</p>
         {props.cid && (
           <iframe
-            className="mt-2"
-            style={{ width: "250px", height: "250px" }}
+            className="my-2"
+            style={{ width: "300px", height: "300px" }}
             src={`https://embed.molview.org/v1/?mode=balls&cid=${props.cid}`}
           ></iframe>
         )}
+        <div className="flex gap-3 mt-2">
+          <Button level="secondary" fullWidth={false}>
+            <div className="flex gap-1 items-center">
+              <MdiShowOutline />
+              <p className="text-sm font-bold">Mostrar en display</p>
+            </div>
+          </Button>
+          <Button level="secondary" fullWidth={false}>
+            <div className="flex gap-1 items-center">
+              <SolarRefreshCircleLinear />
+              <p className="text-sm font-bold">Regenerar</p>
+            </div>
+          </Button>
+        </div>
       </>
     );
 

@@ -34,7 +34,12 @@ export const ChatInput: React.FC<{
         value={props.input}
         rows={1}
         onChange={(event) => onChangeHandler(event, 52)}
-        style={{ height: "52px", resize: "none" }}
+        style={{
+          height: "52px",
+          resize: "none",
+          outlineColor: "#999999",
+          outlineWidth: "2px"
+        }}
         className={
           props.submitting ? styles["disabled-input"] : styles["input"]
         }

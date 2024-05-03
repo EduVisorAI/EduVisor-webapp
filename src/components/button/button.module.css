@@ -15,7 +15,7 @@
 }
 
 .rounded {
-  @apply rounded-full px-2;
+  @apply rounded-full px-3 text-[14px];
 }
 
 .primary-disabled {

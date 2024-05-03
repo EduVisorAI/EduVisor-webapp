@@ -1,4 +1,3 @@
-// import Hero from "../../assets/hero.png";
 import styles from "./home.module.css";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -29,14 +28,6 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles["container"]}>
-      {/* <motion.img
-        animate={{ opacity: 1 }}
-        initial={{ opacity: 0 }}
-        transition={{ delay: 0.2, duration: 2 }}
-        src={Hero}
-        className={styles["hero-img"]}
-        alt="hero"
-      /> */}
       <motion.div
         className={styles["hero-section"]}
         animate={{ y: 0, opacity: 1 }}

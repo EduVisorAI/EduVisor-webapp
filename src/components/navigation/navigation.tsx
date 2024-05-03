@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useEffect, useState } from "react";
@@ -33,15 +34,17 @@ export const Navigation = () => {
 
   const SettingsButton = () => {
     return (
-      <div className="rounded-full flex justify-start items-center gap-2 border-[#EFEFEF] hover:bg-gray-200 cursor-pointer transition-all duration-300 border-[1px] px-2 py-2">
-        <div className="rounded-full flex justify-center items-center bg-[#EFEFEF] p-2">
+      <div
+        className={`${styles["btn"]} justify-start gap-2 border-[#EFEFEF] hover:bg-gray-200 cursor-pointer transition-all duration-300 border-[1px] p-4`}
+      >
+        <div className="bg-[#EFEFEF] rounded-full p-[4px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6  block"
+            className="w-[20px] h-[20px] block"
           >
             <path
               strokeLinecap="round"
@@ -55,32 +58,84 @@ export const Navigation = () => {
             />
           </svg>
         </div>
-        <p className="font-bold">Configuración</p>
+        <p className="font-bold text-[14px]">Configuración</p>
       </div>
     );
   };
 
   const ProfileButton = () => {
     return (
-      <div className="rounded-full flex justify-start items-center gap-2 border-[#EFEFEF] border-[1px] px-2 py-2">
-        <div className="p-2">
-          <img src="/profile.png" className="w-8 h-8" />
-        </div>
-        <p className="font-bold">Alfredo Barrientos</p>
+      <div
+        className={`${styles["btn"]} justify-start gap-2 border-[#EFEFEF] hover:bg-gray-200 cursor-pointer transition-all duration-300 border-[1px] p-4`}
+      >
+        <img src="/profile.png" className="w-[28px] h-[28px]" />
+        <p className="font-bold text-[14px]">Alfredo Barrientos</p>
       </div>
     );
   };
 
-  const TopMenu = () => {
+  const MobileSidebar = () => {
     const [openLeft, setOpenLeft] = useState(false);
 
     return (
       <div className="flex justify-between items-center px-5 py-3.5 border-b border-gray-200">
         <div onClick={() => setOpenLeft(!openLeft)}>
           <img src="/menu.png" className="cursor-pointer" />
-          <Drawer open={openLeft} side="left" setOpen={setOpenLeft} />
+          <Drawer open={openLeft} side="left" setOpen={setOpenLeft}>
+            <Sidebar />
+          </Drawer>
         </div>
         <div></div>
+      </div>
+    );
+  };
+
+  const Sidebar = () => {
+    return (
+      <div className="w-[280px] flex flex-col overflow-x-hidden shrink-0 bg-white h-full">
+        <div className="h-full w-[280px] px-5 py-3">
+          <div className="flex-1 w-full h-full relative">
+            <nav className="flex h-full min-h-0 flex-col">
+              <div className="left-0 right-0 top-0 z-20">
+                <div className="mb-5">
+                  <img src={"/logo.png"} />
+                </div>
+                <div className="flex justify-center items-center gap-2 mb-5">
+                  <button
+                    onClick={newChatHandler}
+                    className={`${styles["btn"]} bg-[#5661F6] hover:bg-[#4C53D7] gap-2 rounded-full items-center text-white p-3 flex-1`}
+                  >
+                    <img src="/add.png" className="w-3 h-3" />
+                    <p className="font-medium text-[14px]">Nuevo chat</p>
+                  </button>
+                  <button className="rounded-full bg-black p-3 flex justify-center items-center">
+                    <img src={"/search.png"} />
+                  </button>
+                </div>
+                <div className="my-0 flex justify-between border-t border-b border-gray-200/50 py-4">
+                  <p className="text-[#6A6969] font-bold text-[12px]">
+                    Tus conversaciones
+                  </p>
+                  <p className="text-[#5661F6] font-bold text-[12px]">
+                    Limpiar todo
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col flex-1 overflow-y-auto h-full ml-1">
+                {conversations.map((convo, index) => (
+                  <Link key={index} to={`/chat/${index}`}>
+                    <ChatItem
+                      convo={convo}
+                      isActive={chatId === index.toString()}
+                    />
+                  </Link>
+                ))}
+              </div>
+              <SettingsButton />
+              <ProfileButton />
+            </nav>
+          </div>
+        </div>
       </div>
     );
   };
@@ -88,60 +143,10 @@ export const Navigation = () => {
   return (
     <>
       <div className="hidden md:block">
-        <div className="w-[348px] flex flex-col overflow-x-hidden shrink-0 bg-white h-full">
-          <div className="h-full w-[348px]">
-            <div className="flex-1 w-full h-full relative">
-              <nav className="flex h-full min-h-0 flex-col pb-3.5">
-                <div className="sticky left-0 right-0 top-0 z-20 pt-3.5 ">
-                  <div className="mb-5 px-5">
-                    <img src={"/logo.png"} />
-                  </div>
-                  <div className="flex justify-center items-center gap-2 mb-5 px-5">
-                    <button
-                      onClick={newChatHandler}
-                      className={`${styles["btn"]} bg-[#5661F6] hover:bg-[#4C53D7] flex gap-2 justify-center items-center rounded-full text-white h-12 flex-1`}
-                    >
-                      <img src="/add.png" />
-                      <p className="font-medium">Nuevo chat</p>
-                    </button>
-                    <button className="rounded-full bg-black w-12 h-12 flex justify-center items-center">
-                      <img src={"/search.png"} />
-                    </button>
-                  </div>
-                  <div className="px-5 my-0 flex justify-between border-t border-b border-gray-200/50 py-4">
-                    <p className="text-[#6A6969] font-bold text-[14px]">
-                      Tus conversaciones
-                    </p>
-                    <p className="text-[#5661F6] font-bold text-[14px]">
-                      Limpiar todo
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-col flex-1 overflow-y-auto h-full">
-                  <div className="px-5">
-                    {conversations.map((convo, index) => (
-                      <Link key={index} to={`/chat/${index}`}>
-                        <ChatItem
-                          convo={convo}
-                          isActive={chatId === index.toString()}
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-                <div className=" px-5 pb-5">
-                  <div className="flex flex-col gap-3">
-                    <SettingsButton />
-                    <ProfileButton />
-                  </div>
-                </div>
-              </nav>
-            </div>
-          </div>
-        </div>
+        <Sidebar />
       </div>
       <div className="md:hidden block">
-        <TopMenu />
+        <MobileSidebar />
       </div>
     </>
   );

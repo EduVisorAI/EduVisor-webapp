@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import { SpeechBubble } from "../../components/speechBubble/speechBubble.tsx";
 import { ChatInput } from "../../components/chatInput/chatInput.tsx";
 import { Card } from "../../components/card/card.tsx";
-import { Button } from "../../components/button/button.tsx";
 
 const promptTemplates = [
   "Explicame sobre el etanol",
@@ -60,27 +59,6 @@ export const ChatPage = () => {
     }
   };
 
-  const ExtraFeatures = () => {
-    return (
-      <>
-        <div className="flex gap-4">
-          <Button level="secondary" fullWidth={false}>
-            <div className="flex gap-1 items-center">
-              <img src="/show.png" className="object-contain" />
-              <p className="text-sm">Mostrar en display</p>
-            </div>
-          </Button>
-          <Button level="secondary" fullWidth={false}>
-            <div className="flex gap-1 items-center">
-              <img src="/refresh.png" className="object-contain" />
-              <p className="text-sm">Regenerar</p>
-            </div>
-          </Button>
-        </div>
-      </>
-    );
-  };
-
   return (
     <>
       {conversation && conversation.speeches.length === 0 && (
@@ -111,16 +89,13 @@ export const ChatPage = () => {
               animate = true;
             }
             return (
-              <>
-                <SpeechBubble
-                  key={id}
-                  speaker={speaker}
-                  text={speech.content.response}
-                  cid={speech.content.cid}
-                  animate={animate}
-                />
-                {speaker === "ai" && <ExtraFeatures />}
-              </>
+              <SpeechBubble
+                key={id}
+                speaker={speaker}
+                text={speech.content.response}
+                cid={speech.content.cid}
+                animate={animate}
+              />
             );
           })}
           {loading && (
