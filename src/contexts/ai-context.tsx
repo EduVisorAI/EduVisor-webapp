@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { RenderedConversation } from "../chat-gpt/renderer";
 import { Controller } from "../chat-gpt/controller";
-import { useAuth } from "./authContext";
 
 export const AIContext = React.createContext<{
   conversations: RenderedConversation[];
