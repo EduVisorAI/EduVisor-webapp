@@ -3,20 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useContext } from "react";
 import React from "react";
-// import { useAuth } from "../../contexts/authContext";
-// import { User } from "firebase/auth"; // Importa el tipo User de firebase/auth
 import { AIContext } from "../../contexts/ai-context";
 import { Button } from "../../components/button/button";
 
-// interface AuthContextType {
-//   user: User | null;
-//   userLoggedIn: boolean;
-// }
-
 const Home: React.FC = () => {
-  // const auth = useAuth() as AuthContextType;
-  // const { user } = auth;
-
   const navigate = useNavigate();
   const aiContext = useContext(AIContext);
 

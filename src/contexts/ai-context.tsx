@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { RenderedConversation } from "../chat-gpt/renderer";
 import { Controller } from "../chat-gpt/controller";
+import { useAuth } from "./authContext";
 
 export const AIContext = React.createContext<{
   conversations: RenderedConversation[];
@@ -9,7 +10,7 @@ export const AIContext = React.createContext<{
   token: number;
   prompt: string;
   newConvo: () => void;
-  sendPrompt: (id: number, prompt: string) => Promise<void>;
+  sendPrompt: (id: number, prompt: string, userId: string) => Promise<void>;
   configure: (temp: number, token: number, prompt: string) => void;
 }>({
   conversations: [],
@@ -17,7 +18,7 @@ export const AIContext = React.createContext<{
   token: 2048,
   prompt: "",
   newConvo: () => {},
-  sendPrompt: (_id: number, _prompt: string) =>
+  sendPrompt: (_id: number, _prompt: string, _userId: string) =>
     new Promise((_resolve, _reject) => {}),
   configure: (_temp: number, _token: number, _prompt: string) => {}
 });
@@ -50,7 +51,7 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
     setConversations((prevConvos) => [...prevConvos, addedConvo]);
   };
 
-  const sendPrompt = async (id: number, prompt: string) => {
+  const sendPrompt = async (id: number, prompt: string, userId: string) => {
     const chatGptApi = new Controller();
     setConversations((prevConvos) => {
       const newConvos = [...prevConvos];
@@ -62,7 +63,7 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
       });
       return newConvos;
     });
-    await chatGptApi.prompt(id, prompt);
+    await chatGptApi.prompt(id, prompt, userId);
     const conversations = chatGptApi.convos();
     setConversations(conversations);
     summarizeConvo(id);

@@ -7,6 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AIContext } from "../../contexts/ai-context";
 import styles from "../button/button.module.css";
 import Drawer from "../drawer/drawer";
+import { IcBaselinePlus } from "../../assets/add";
 
 export const Navigation = () => {
   const [chatTitle, setChatTitle] = useState("");
@@ -35,7 +36,7 @@ export const Navigation = () => {
   const SettingsButton = () => {
     return (
       <div
-        className={`${styles["btn"]} justify-start gap-2 border-[#EFEFEF] hover:bg-gray-200 cursor-pointer transition-all duration-300 border-[1px] p-4`}
+        className={`flex items-center rounded-full my-2 justify-start gap-2 border-[#EFEFEF] hover:bg-gray-200 transition-all duration-300 cursor-pointer border-[1px] p-4`}
       >
         <div className="bg-[#EFEFEF] rounded-full p-[4px]">
           <svg
@@ -66,7 +67,7 @@ export const Navigation = () => {
   const ProfileButton = () => {
     return (
       <div
-        className={`${styles["btn"]} justify-start gap-2 border-[#EFEFEF] hover:bg-gray-200 cursor-pointer transition-all duration-300 border-[1px] p-4`}
+        className={`flex items-center rounded-full my-2  justify-start gap-2 border-[#EFEFEF] border-[1px] p-4`}
       >
         <img src="/profile.png" className="w-[28px] h-[28px]" />
         <p className="font-bold text-[14px]">Alfredo Barrientos</p>
@@ -103,10 +104,10 @@ export const Navigation = () => {
                 <div className="flex justify-center items-center gap-2 mb-5">
                   <button
                     onClick={newChatHandler}
-                    className={`${styles["btn"]} bg-[#5661F6] hover:bg-[#4C53D7] gap-2 rounded-full items-center text-white p-3 flex-1`}
+                    className={`${styles["btn"]} bg-[#5661F6] hover:bg-[#4C53D7] gap-2 rounded-full items-center text-white py-3 flex-1`}
                   >
-                    <img src="/add.png" className="w-3 h-3" />
-                    <p className="font-medium text-[14px]">Nuevo chat</p>
+                    <IcBaselinePlus />
+                    <p className="mt-[2px]">Nuevo chat</p>
                   </button>
                   <button className="rounded-full bg-black p-3 flex justify-center items-center">
                     <img src={"/search.png"} />
@@ -116,9 +117,15 @@ export const Navigation = () => {
                   <p className="text-[#6A6969] font-bold text-[12px]">
                     Tus conversaciones
                   </p>
-                  <p className="text-[#5661F6] font-bold text-[12px]">
+                  <button
+                    className="text-[#5661F6] font-bold text-[12px]"
+                    onClick={() => {
+                      localStorage.clear();
+                      window.location.reload();
+                    }}
+                  >
                     Limpiar todo
-                  </p>
+                  </button>
                 </div>
               </div>
               <div className="flex flex-col flex-1 overflow-y-auto h-full ml-1">

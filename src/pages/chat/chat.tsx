@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useEffect, useRef, useState } from "react";
 import { AIContext } from "../../contexts/ai-context.tsx";
 import { useNavigate, useParams } from "react-router";
@@ -7,6 +8,7 @@ import { motion } from "framer-motion";
 import { SpeechBubble } from "../../components/speechBubble/speechBubble.tsx";
 import { ChatInput } from "../../components/chatInput/chatInput.tsx";
 import { Card } from "../../components/card/card.tsx";
+import { useAuth } from "../../contexts/authContext/index.tsx";
 
 const promptTemplates = [
   "Explicame sobre el etanol",
@@ -14,6 +16,7 @@ const promptTemplates = [
 ];
 
 export const ChatPage = () => {
+  const auth = useAuth();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -29,7 +32,6 @@ export const ChatPage = () => {
   useEffect(() => {
     if (conversations[chatId]) {
       setConversation(conversations[chatId]);
-      console.log("conversation.speeches", conversations[chatId].speeches);
     } else {
       navigate("/");
     }
@@ -49,10 +51,10 @@ export const ChatPage = () => {
     if (prompt.trim().length > 0) {
       try {
         setLoading(true);
-        await sendPrompt(chatId, prompt);
+        await sendPrompt(chatId, prompt, auth?.user?.email as string);
         setInput("");
       } catch (err) {
-        setError("Oops...an error has occurred. Please try again.");
+        setError("Vaya... se ha producido un error. Inténtalo de nuevo.");
       }
       setLoading(false);
       chatEndRef!.current!.scrollIntoView({ behavior: "smooth" });
@@ -88,6 +90,7 @@ export const ChatPage = () => {
             if (id === conversation.speeches.length - 1) {
               animate = true;
             }
+
             return (
               <SpeechBubble
                 key={id}

@@ -8,16 +8,6 @@ export const ChatInput: React.FC<{
   inputSubmitHandler: (prompt: string) => void;
   submitting: boolean;
 }> = (props) => {
-  const onChangeHandler = (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-    height: number
-  ) => {
-    props.inputChangeHandler(event.target.value);
-    const target = event.target;
-    target.style.height = `${height}px`;
-    target.style.height = `${target.scrollHeight}px`;
-  };
-
   return (
     <motion.form
       className={styles["container"]}
@@ -33,9 +23,8 @@ export const ChatInput: React.FC<{
         placeholder="¿Que estás pensando?..."
         value={props.input}
         rows={1}
-        onChange={(event) => onChangeHandler(event, 52)}
+        onChange={(event) => props.inputChangeHandler(event.target.value)}
         style={{
-          height: "52px",
           resize: "none",
           outlineColor: "#999999",
           outlineWidth: "2px"
@@ -45,14 +34,14 @@ export const ChatInput: React.FC<{
         }
         disabled={props.submitting}
       />
-      <div className="absolute right-2 disabled:opacity-10  md:right-4">
+      <div className="absolute disabled:opacity-10 right-4">
         <Button
           level="primary"
           fullWidth={false}
           rounded={true}
           submitting={props.submitting}
         >
-          <img src="/send.png" className="w-5 h-5" />
+          <img src="/send.png" className={`w-5 h-5`} />
         </Button>
       </div>
     </motion.form>

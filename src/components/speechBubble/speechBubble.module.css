@@ -1,15 +1,15 @@
 .ai-container {
-  @apply flex flex-row-reverse;
+  @apply w-full mx-auto max-w-[56rem];
 }
 
 .user-container {
-  @apply flex;
+  @apply w-full mx-auto max-w-[56rem];
 }
 
 .ai {
-  @apply p-2 w-fit max-w-full rounded-tl-lg rounded-tr-lg rounded-br-lg my-2;
+  @apply p-2;
 }
 
 .user {
-  @apply inline-block w-fit max-w-full p-2 rounded-tl-lg rounded-tr-lg rounded-bl-lg my-2;
+  @apply inline-block p-2;
 }

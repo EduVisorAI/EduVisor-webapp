@@ -1,4 +1,3 @@
-import { Renderer } from "../renderer";
 import { Conversation } from "./conversation";
 import { Prompt } from "./prompt";
 import { Race, Speaker } from "./speaker";
@@ -24,55 +23,40 @@ export class AI extends Speaker {
     this.prompt = this.prompt.update(prompt);
   }
 
-  async think(conversation: Conversation) {
-    const response = await this.request(
-      this.prompt,
-      conversation,
-      this.token.length,
-      this.temperature.value
-    );
+  async think(conversation: Conversation, userId: string) {
+    conversation;
+    const response = await this.request(this.prompt, userId);
 
     return response;
   }
 
   async summarize(conversation: Conversation) {
-    const titlePrompt = new Prompt(
-      "Summarize the following conversation with a title that doesn't exceed 20 letters."
-    );
-    const descriptionPrompt = new Prompt(
-      "Read the following conversation, and based on the topic, predict what will be talked about. Then, write a short paragraph that summarizes the conversation."
-    );
-    const title = await this.request(
-      titlePrompt,
-      conversation,
-      this.token.length,
-      0
-    );
-    const description = await this.request(
-      descriptionPrompt,
-      conversation,
-      this.token.length,
-      0
-    );
+    // const titlePrompt = new Prompt(
+    //   "Summarize the following conversation with a title that doesn't exceed 20 letters."
+    // );
+    // const descriptionPrompt = new Prompt(
+    //   "Read the following conversation, and based on the topic, predict what will be talked about. Then, write a short paragraph that summarizes the conversation."
+    // );
+    // const title = await this.request(titlePrompt);
+    // const description = await this.request(descriptionPrompt);
+    // conversation.summarize({
+    //   title: title.content.response,
+    //   description: description.content.response
+    // });
     conversation.summarize({
-      title: title.content.response,
-      description: description.content.response
+      title: conversation.speeches[0].content.response,
+      description: conversation.speeches[0].content.response
     });
   }
 
-  private async request(
-    prompt: Prompt,
-    conversation: Conversation,
-    tokens: number,
-    temperature: number
-  ) {
-    const renderer = new Renderer();
+  private async request(prompt: Prompt, userId?: string) {
     try {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("userId", userId ?? "");
 
       const raw = JSON.stringify({
-        chemicalRequest: prompt.content
+        message: prompt.content
       });
 
       //  {"response": "string", "cid": "number"}
@@ -92,33 +76,5 @@ export class AI extends Speaker {
     } catch (error) {
       throw new Error("There was an error. Please try again.");
     }
-
-    // const configuration = new Configuration({
-    //   apiKey: import.meta.env.VITE_OPENAI_API_KEY
-    // });
-    // const openai = new OpenAIApi(configuration);
-    // const parameters = {
-    //   model: "text-davinci-003",
-    //   prompt: renderer.AIPrompt(prompt, conversation),
-    //   max_tokens: tokens,
-    //   temperature: temperature
-    // };
-
-    // const response = await openai.createCompletion(parameters);
-
-    // if (response.data.choices[0].text) {
-    //   return this.speak(response.data.choices[0].text);
-    // } else {
-    //   throw new Error("There was an error. Please try again.");
-    // }
-
-    renderer; // remove
-    prompt; // remove
-    conversation; // remove
-    tokens; // remove
-    temperature; // remove
-    // return this.speak(
-    //   "El etanol, también conocido como alcohol etílico, es un compuesto químico que se usa comúnmente como combustible, en bebidas alcohólicas y en aplicaciones industriales y médicas. Aquí te explico algunos de los aspectos más importantes del etanol:"
-    // );
   }
 }

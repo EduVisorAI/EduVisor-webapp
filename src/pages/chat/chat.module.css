@@ -15,9 +15,9 @@
 }
 
 .chat-container {
-  @apply flex-1 overflow-y-auto py-5 px-5;
+  @apply w-full mx-auto flex-1 overflow-y-auto py-5 px-5;
 }
 
 .error-container {
-  @apply bg-red-200 text-red-400 p-4 rounded-md;
+  @apply bg-red-200 text-red-400 p-4 rounded-md max-w-[56rem] mx-auto my-4;
 }

@@ -18,7 +18,7 @@ export class Controller {
     return renderer.conversation(newConvo);
   }
 
-  async prompt(convoId: number, prompt: string) {
+  async prompt(convoId: number, prompt: string,userId: string) {
     const convos = this.readConversations();
     const curConvo = convos[convoId];
     const human = new Human();
@@ -26,7 +26,7 @@ export class Controller {
     const speech = human.speak({ response: prompt });
     human.add(speech, curConvo);
     ai.prompt = new Prompt(prompt);
-    const response = await ai.think(curConvo);
+    const response = await ai.think(curConvo,userId);
     ai.add(response, curConvo);
     this.writeConversations(convos);
     return response;

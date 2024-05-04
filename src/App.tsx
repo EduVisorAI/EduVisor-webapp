@@ -1,4 +1,3 @@
-import Header from "./components/header";
 import Home from "./pages/home/home";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/authContext";
@@ -8,19 +7,35 @@ import { AIContextProvider } from "./contexts/ai-context";
 import { ChatPage } from "./pages/chat/chat";
 import Login from "./pages/auth/login/login";
 import Register from "./pages/auth/register/register";
+import PrivateRoute from "./pages/private_route";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
+    errorElement: <div>404 Not Found</div>,
     children: [
-      { index: true, element: <Home /> },
-      { path: "/chat/:chatId", element: <ChatPage /> }
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        )
+      },
+      {
+        path: "/chat/:chatId",
+        element: (
+          <PrivateRoute>
+            <ChatPage />
+          </PrivateRoute>
+        )
+      }
     ]
   },
   {
-    path: "/auth",
-    element: <Header />,
+    path: "/",
+    errorElement: <div>404 Not Found</div>,
     children: [
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> }
