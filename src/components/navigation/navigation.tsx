@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-import { Menu, MenuItem, MenuButton, SubMenu } from "@szhsin/react-menu";
+import { Menu, MenuItem } from "@szhsin/react-menu";
 import { useContext, useEffect, useState } from "react";
 import { ChatItem } from "../chatItem/chatItem";
 import { Link, useNavigate, useParams } from "react-router-dom";
