@@ -22,7 +22,7 @@ export const ChatItem: React.FC<
           src={`/message${props.isActive ? "_active" : ""}.png`}
           className={`object-contain ${props.isActive ? "#5661F6" : ""} `}
         />
-        <h4 className={styles["title"]}>{format(props.convo.title, 25)}</h4>
+        <h4 className={styles["title"]}>{format(props.convo.title, 23)}</h4>
       </div>
     </div>
   );
