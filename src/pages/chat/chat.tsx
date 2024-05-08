@@ -17,7 +17,7 @@ const promptTemplates = [
 
 export const ChatPage = () => {
   const auth = useAuth();
-  const [input, setInput] = useState("");
+  const [, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [conversation, setConversation] = useState<
@@ -29,18 +29,19 @@ export const ChatPage = () => {
   const navigate = useNavigate();
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (conversations[chatId]) {
       setConversation(conversations[chatId]);
     } else {
       navigate("/");
     }
-  }, [conversations, chatId]);
+  }, [chatId, conversations, navigate]);
 
-  const onInputChange = (input: string) => {
-    setError("");
-    setInput(input);
-  };
+  // const onInputChange = (input: string) => {
+  //   setError("");
+  //   setInput(input);
+  // };
 
   const onTemplateClicked = (template: string) => {
     setInput(template);
@@ -52,7 +53,6 @@ export const ChatPage = () => {
       try {
         setLoading(true);
         await sendPrompt(chatId, prompt, auth?.user?.email as string);
-        setInput("");
       } catch (err) {
         setError("Vaya... se ha producido un error. Inténtalo de nuevo.");
       }
@@ -115,8 +115,6 @@ export const ChatPage = () => {
         </div>
       )}
       <ChatInput
-        input={input}
-        inputChangeHandler={onInputChange}
         inputSubmitHandler={onInputSubmit}
         submitting={loading}
       />
