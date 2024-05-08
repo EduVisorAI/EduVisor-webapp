@@ -8,7 +8,7 @@ export const AIContext = React.createContext<{
   temperature: number;
   token: number;
   prompt: string;
-  newConvo: () => void;
+  newConvo: (uuid: string) => void;
   sendPrompt: (id: number, prompt: string, userId: string) => Promise<void>;
   configure: (temp: number, token: number, prompt: string) => void;
 }>({
@@ -16,7 +16,7 @@ export const AIContext = React.createContext<{
   temperature: 0,
   token: 2048,
   prompt: "",
-  newConvo: () => {},
+  newConvo: (_uuid: string) => {},
   sendPrompt: (_id: number, _prompt: string, _userId: string) =>
     new Promise((_resolve, _reject) => {}),
   configure: (_temp: number, _token: number, _prompt: string) => {}
@@ -40,9 +40,10 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
     setPrompt(ai.prompt);
   }, []);
 
-  const newConvo = () => {
+  const newConvo = async (uuid: string) => {
     const chatGptApi = new Controller();
     const addedConvo = chatGptApi.newConvo({
+      id: uuid,
       title: "",
       description: "",
       speeches: []
@@ -54,14 +55,17 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
     const chatGptApi = new Controller();
     setConversations((prevConvos) => {
       const newConvos = [...prevConvos];
-      newConvos[id].speeches.push({
-        speaker: "HUMAN",
-        content: {
-          response: prompt
-        }
-      });
+      newConvos
+        .find((c) => c.id === id.toString())!
+        .speeches.push({
+          speaker: "HUMAN",
+          content: {
+            response: prompt
+          }
+        });
       return newConvos;
     });
+
     await chatGptApi.prompt(id, prompt, userId);
     const conversations = chatGptApi.convos();
     setConversations(conversations);
@@ -71,11 +75,11 @@ export const AIContextProvider: React.FC<React.PropsWithChildren> = (props) => {
   const summarizeConvo = async (id: number) => {
     const chatGptApi = new Controller();
     let conversations = chatGptApi.convos();
+    const convo = conversations.find((c) => c.id === id.toString());
     if (
-      conversations[id].speeches.length === 2 ||
-      conversations[id].title === "Untitled Conversation" ||
-      conversations[id].description ===
-        "This conversation hasn't been summarized."
+      convo?.speeches.length === 2 ||
+      convo?.title === "Untitled Conversation" ||
+      convo?.description === "This conversation hasn't been summarized."
     ) {
       await chatGptApi.summarize(id);
       conversations = chatGptApi.convos();

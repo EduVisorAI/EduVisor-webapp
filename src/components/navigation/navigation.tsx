@@ -13,6 +13,7 @@ import Drawer from "../drawer/drawer";
 import { IcBaselinePlus } from "../../assets/add";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
+import ShortUniqueId from "short-unique-id";
 
 export const Navigation = () => {
   const [chatTitle, setChatTitle] = useState("");
@@ -33,9 +34,9 @@ export const Navigation = () => {
   }, [chatId, conversations]);
 
   const newChatHandler = () => {
-    const id = conversations.length;
-    newConvo();
-    navigate(`/chat/${id}`);
+    const uuid = new ShortUniqueId({ length: 6 }).randomUUID();
+    newConvo(uuid);
+    navigate(`/chat/${uuid}`);
   };
 
   const SettingsButton = () => {
@@ -153,11 +154,8 @@ export const Navigation = () => {
               </div>
               <div className="flex flex-col flex-1 overflow-y-auto h-full ml-1">
                 {conversations.map((convo, index) => (
-                  <Link key={index} to={`/chat/${index}`}>
-                    <ChatItem
-                      convo={convo}
-                      isActive={chatId === index.toString()}
-                    />
+                  <Link key={index} to={`/chat/${convo.id}`}>
+                    <ChatItem convo={convo} isActive={chatId === convo.id} />
                   </Link>
                 ))}
               </div>

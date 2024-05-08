@@ -1,17 +1,24 @@
 import { Speech, Summary } from "../utils";
 
 export class Conversation {
+  private _id: string;
   private _title: string;
   private _description: string;
   speeches: Speech[];
 
-  constructor(speeches?: Speech[], title?: string, description?: string) {
+  constructor(
+    speeches?: Speech[],
+    id?: string,
+    title?: string,
+    description?: string
+  ) {
     if (speeches) {
       this.speeches = speeches;
     } else {
       this.speeches = [];
     }
 
+    this._id = id ? id : "";
     this._title = title ? title : "";
     this._description = description ? description : "";
   }
@@ -25,6 +32,10 @@ export class Conversation {
       this._title = summary.title;
       this._description = summary.description;
     }
+  }
+
+  id() {
+    return this._id;
   }
 
   title() {

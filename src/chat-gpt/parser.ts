@@ -25,7 +25,7 @@ export class Parser {
         }
       });
     }
-    return new Conversation(speeches, convo.title, convo.description);
+    return new Conversation(speeches, convo.id, convo.title, convo.description);
   }
 
   speech(speech: { speaker: Race; content: string }) {

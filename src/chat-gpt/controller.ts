@@ -18,15 +18,17 @@ export class Controller {
     return renderer.conversation(newConvo);
   }
 
-  async prompt(convoId: number, prompt: string,userId: string) {
+  async prompt(convoId: number, prompt: string, userId: string) {
     const convos = this.readConversations();
-    const curConvo = convos[convoId];
+    const curConvo = convos.find(
+      (c) => c.id() === convoId.toString()
+    ) as Conversation;
     const human = new Human();
     const ai = this.readAI();
     const speech = human.speak({ response: prompt });
     human.add(speech, curConvo);
     ai.prompt = new Prompt(prompt);
-    const response = await ai.think(curConvo,userId);
+    const response = await ai.think(curConvo, userId);
     ai.add(response, curConvo);
     this.writeConversations(convos);
     return response;
@@ -34,7 +36,9 @@ export class Controller {
 
   async summarize(convoId: number) {
     const convos = this.readConversations();
-    const curConvo = convos[convoId];
+    const curConvo = convos.find(
+      (c) => c.id() === convoId.toString()
+    ) as Conversation;
     const ai = this.readAI();
     await ai.summarize(curConvo);
     this.writeConversations(convos);

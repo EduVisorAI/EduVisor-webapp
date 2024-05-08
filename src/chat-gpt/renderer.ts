@@ -12,6 +12,7 @@ export type RenderedSpeech = {
 };
 
 export type RenderedConversation = {
+  id: string;
   title: string;
   description: string;
   speeches: RenderedSpeech[];
@@ -35,6 +36,7 @@ export class Renderer {
       renderedConvosArr.push(speech);
     }
     return {
+      id: convo.id(),
       title: convo.title(),
       description: convo.description(),
       speeches: renderedConvosArr

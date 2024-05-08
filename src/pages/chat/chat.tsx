@@ -31,8 +31,8 @@ export const ChatPage = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (conversations[chatId]) {
-      setConversation(conversations[chatId]);
+    if (chatId && conversations.find((c) => c.id === chatId)) {
+      setConversation(conversations.find((c) => c.id === chatId));
     } else {
       navigate("/");
     }
@@ -114,10 +114,7 @@ export const ChatPage = () => {
           <div ref={chatEndRef} />
         </div>
       )}
-      <ChatInput
-        inputSubmitHandler={onInputSubmit}
-        submitting={loading}
-      />
+      <ChatInput inputSubmitHandler={onInputSubmit} submitting={loading} />
     </>
   );
 };

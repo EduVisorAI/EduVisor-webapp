@@ -5,15 +5,16 @@ import { useContext } from "react";
 import React from "react";
 import { AIContext } from "../../contexts/ai-context";
 import { Button } from "../../components/button/button";
+import ShortUniqueId from "short-unique-id";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const aiContext = useContext(AIContext);
 
   const newChatHandler = () => {
-    const id = aiContext.conversations.length;
-    aiContext.newConvo();
-    navigate(`/chat/${id}`);
+    const uuid = new ShortUniqueId({ length: 6 }).randomUUID();
+    aiContext.newConvo(uuid);
+    navigate(`/chat/${uuid}`);
   };
 
   return (
