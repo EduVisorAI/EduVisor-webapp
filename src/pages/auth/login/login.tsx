@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Navigate, Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import {
-  doSignInWithEmailAndPassword,
+  // doSignInWithEmailAndPassword,
   doSignInWithGoogle
 } from "../../../firebase/auth";
 import { useAuth } from "../../../contexts/authContext";
@@ -13,19 +13,22 @@ const Login: React.FC = () => {
     userLoggedIn = auth.userLoggedIn;
   }
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [roomNumber, setRoomNumber] = useState('');
+
+
+  // const [email, setEmail] = useState<string>("");
+  // const [password, setPassword] = useState<string>("");
   const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
   const [errorMessage] = useState<string>("");
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isSigningIn) {
-      setIsSigningIn(true);
-      await doSignInWithEmailAndPassword(email, password);
-      // doSendEmailVerification()
-    }
-  };
+  // const onSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (!isSigningIn) {
+  //     setIsSigningIn(true);
+  //     await doSignInWithEmailAndPassword(email, password);
+  //     // doSendEmailVerification()
+  //   }
+  // };
 
   const onGoogleSignIn = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -37,7 +40,7 @@ const Login: React.FC = () => {
     }
   };
 
-  return (
+return (
     <div>
       {userLoggedIn && <Navigate to={"/"} replace={true} />}
 
@@ -46,68 +49,15 @@ const Login: React.FC = () => {
           <div className="text-center">
             <div className="mt-2">
               <h3 className="text-gray-800 text-xl font-semibold sm:text-2xl">
-                Welcome Back
+                Bienvenido a EduVisor 🧪
               </h3>
             </div>
           </div>
-          <form onSubmit={onSubmit} className="space-y-5">
-            <div>
-              <label className="text-sm text-gray-600 font-bold">Email</label>
-              <input
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg transition duration-300"
-              />
-            </div>
 
-            <div>
-              <label className="text-sm text-gray-600 font-bold">
-                Password
-              </label>
-              <input
-                type="password"
-                autoComplete="current-password"
-                required
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg transition duration-300"
-              />
-            </div>
+          {errorMessage && (
+            <span className="text-red-600 font-bold">{errorMessage}</span>
+          )}
 
-            {errorMessage && (
-              <span className="text-red-600 font-bold">{errorMessage}</span>
-            )}
-
-            <button
-              type="submit"
-              disabled={isSigningIn}
-              className={`w-full px-4 py-2 text-white font-medium rounded-lg ${
-                isSigningIn
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-indigo-600 hover:bg-indigo-700 hover:shadow-xl transition duration-300"
-              }`}
-            >
-              {isSigningIn ? "Signing In..." : "Sign In"}
-            </button>
-          </form>
-          <p className="text-center text-sm">
-            Don't have an account?{" "}
-            <Link to={"/register"} className="hover:underline font-bold">
-              Sign up
-            </Link>
-          </p>
-          <div className="flex flex-row text-center w-full">
-            <div className="border-b-2 mb-2.5 mr-2 w-full"></div>
-            <div className="text-sm font-bold w-fit">OR</div>
-            <div className="border-b-2 mb-2.5 ml-2 w-full"></div>
-          </div>
           <button
             disabled={isSigningIn}
             onClick={(e) => {
@@ -151,6 +101,23 @@ const Login: React.FC = () => {
             </svg>
             {isSigningIn ? "Signing In..." : "Continue with Google"}
           </button>
+
+          <input
+          type="text"
+          value={roomNumber}
+          onChange={(e) => setRoomNumber(e.target.value)}
+          placeholder="Coloca el room aquí"
+          className="w-full py-2 px-3 border rounded-lg text-sm"
+        />
+
+        <button
+          onClick={() => {
+            // handle room connection here
+          }}
+          className="w-full py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-100 transition duration-300 active:bg-gray-100"
+        >
+          Conectar a room
+        </button>
         </div>
       </main>
     </div>
