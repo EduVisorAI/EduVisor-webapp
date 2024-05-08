@@ -110,7 +110,11 @@ export const Navigation = () => {
             <Sidebar />
           </Drawer>
         </div>
-        <div></div>
+        <div className="flex md:hidden justify-end">
+          <button className={`${styles["btn"]} ${styles["primary"]} m-0`}>
+            Room {chatId}
+          </button>
+        </div>
       </div>
     );
   };

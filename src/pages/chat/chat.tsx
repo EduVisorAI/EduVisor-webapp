@@ -9,6 +9,7 @@ import { SpeechBubble } from "../../components/speechBubble/speechBubble.tsx";
 import { ChatInput } from "../../components/chatInput/chatInput.tsx";
 import { Card } from "../../components/card/card.tsx";
 import { useAuth } from "../../contexts/authContext/index.tsx";
+import { Button } from "../../components/button/button.tsx";
 
 const promptTemplates = [
   "Explicame sobre el etanol",
@@ -84,34 +85,40 @@ export const ChatPage = () => {
       )}
       {conversation && conversation.speeches.length > 0 && (
         <div className={styles["chat-container"]}>
-          {conversation.speeches.map((speech, id) => {
-            const speaker = speech.speaker === "HUMAN" ? "user" : "ai";
-            let animate = false;
-            if (id === conversation.speeches.length - 1) {
-              animate = true;
-            }
-
-            return (
+          <div className="hidden md:flex  justify-end">
+            <Button level="primary" fullWidth={false} clickHandler={() => {}}>
+              Room {chatId}
+            </Button>
+          </div>
+          <div>
+            {conversation.speeches.map((speech, id) => {
+              const speaker = speech.speaker === "HUMAN" ? "user" : "ai";
+              let animate = false;
+              if (id === conversation.speeches.length - 1) {
+                animate = true;
+              }
+              return (
+                <SpeechBubble
+                  key={id}
+                  speaker={speaker}
+                  text={speech.content.response}
+                  cid={speech.content.cid}
+                  animate={animate}
+                />
+              );
+            })}
+            {loading && (
               <SpeechBubble
-                key={id}
-                speaker={speaker}
-                text={speech.content.response}
-                cid={speech.content.cid}
-                animate={animate}
+                speaker="ai"
+                text=""
+                loading={true}
+                animate={true}
+                delay={0.5}
               />
-            );
-          })}
-          {loading && (
-            <SpeechBubble
-              speaker="ai"
-              text=""
-              loading={true}
-              animate={true}
-              delay={0.5}
-            />
-          )}
-          {error && <div className={styles["error-container"]}>{error}</div>}
-          <div ref={chatEndRef} />
+            )}
+            {error && <div className={styles["error-container"]}>{error}</div>}
+            <div ref={chatEndRef} />
+          </div>
         </div>
       )}
       <ChatInput inputSubmitHandler={onInputSubmit} submitting={loading} />
