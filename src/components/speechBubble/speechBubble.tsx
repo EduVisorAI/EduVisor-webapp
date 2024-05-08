@@ -14,7 +14,7 @@ export const SpeechBubble: React.FC<{
   loading?: boolean;
   animate: boolean;
   delay?: number;
-}> = (props) => {
+}> = React.memo((props) => {
   let speechBubbleClass: string;
   let containerClass: string;
 
@@ -100,4 +100,4 @@ export const SpeechBubble: React.FC<{
       </div>
     );
   }
-};
+});
