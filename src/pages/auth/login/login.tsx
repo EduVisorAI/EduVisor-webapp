@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
   // doSignInWithEmailAndPassword,
   doSignInWithGoogle
@@ -13,13 +13,13 @@ const Login: React.FC = () => {
     userLoggedIn = auth.userLoggedIn;
   }
 
-  const [roomNumber, setRoomNumber] = useState('');
-
+  const [roomNumber, setRoomNumber] = useState("");
 
   // const [email, setEmail] = useState<string>("");
   // const [password, setPassword] = useState<string>("");
   const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
   const [errorMessage] = useState<string>("");
+  const navigate = useNavigate();
 
   // const onSubmit = async (e: React.FormEvent) => {
   //   e.preventDefault();
@@ -40,7 +40,7 @@ const Login: React.FC = () => {
     }
   };
 
-return (
+  return (
     <div>
       {userLoggedIn && <Navigate to={"/"} replace={true} />}
 
@@ -103,21 +103,22 @@ return (
           </button>
 
           <input
-          type="text"
-          value={roomNumber}
-          onChange={(e) => setRoomNumber(e.target.value)}
-          placeholder="Coloca el room aquí"
-          className="w-full py-2 px-3 border rounded-lg text-sm"
-        />
+            type="text"
+            value={roomNumber}
+            onChange={(e) => setRoomNumber(e.target.value)}
+            placeholder="Coloca el room aquí"
+            className="w-full py-2 px-3 border rounded-lg text-sm"
+          />
 
-        <button
-          onClick={() => {
-            // handle room connection here
-          }}
-          className="w-full py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-100 transition duration-300 active:bg-gray-100"
-        >
-          Conectar a room
-        </button>
+          <button
+            onClick={() => {
+              // handle room connection here
+              navigate("/display/" + roomNumber);
+            }}
+            className="w-full py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-100 transition duration-300 active:bg-gray-100"
+          >
+            Conectar a room
+          </button>
         </div>
       </main>
     </div>

@@ -8,6 +8,7 @@ import { ChatPage } from "./pages/chat/chat";
 import Login from "./pages/auth/login/login";
 import Register from "./pages/auth/register/register";
 import PrivateRoute from "./pages/private_route";
+import { DisplayPage } from "./pages/display/display";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,11 @@ const router = createBrowserRouter([
     errorElement: <div>404 Not Found</div>,
     children: [
       { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> }
+      { path: "register", element: <Register /> },
+      {
+        path: "/display/:chatId",
+        element: <DisplayPage />
+      }
     ]
   }
 ]);
